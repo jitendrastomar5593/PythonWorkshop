@@ -1,0 +1,143 @@
+""" 
+Question 1:
+You are tasked with writing a program in Python to calculate the average of three numbers.
+Write a Python program that takes three numbers as input from the user and calculates their average.
+Display the result on the screen.
+"""
+# Taking input from the user
+num1 = float(input("Enter the first number: "))
+num2 = float(input("Enter the second number: "))
+num3 = float(input("Enter the third number: "))
+
+# Calculating the average
+average = (num1 + num2 + num3) / 3
+
+# Displaying the result
+print("The average of the three numbers is:", average)
+
+
+'''
+Question 2:
+You are given a CSV file named "data.csv" that contains information about students in a school. 
+The file has the following columns: Name, Age, Grade 
+(Grades must be created dynamically using Python code & then saved into the "data.csv" file & 
+then only it must be used). Write a Python program to read the data from the CSV file and 
+calculate the average age of the students.
+'''
+import csv
+
+# Read data from CSV file
+with open("C://Users/shind/Downloads/Data.csv", 'r') as file:
+    reader = csv.DictReader(file)
+    ages = [int(row['Age']) for row in reader]
+
+# Calculate the average age
+average_age = sum(ages) / len(ages)
+
+# Display the result
+print("The average age of the students is:", average_age)
+
+
+'''Question 3:
+You are building a simple banking application using Python and OOP. 
+Create a class called "BankAccount" that has attributes like "CustomerID", "Account_Number" and "Balance." 
+Implement methods for depositing and withdrawing money from the account. 
+Write a code snippet that demonstrates the usage of this class.'''
+
+class BankAccount:
+    def __init__(self, customer_id, account_number, balance=0):
+        self.customer_id = customer_id
+        self.account_number = account_number
+        self.balance = balance
+
+    def deposit(self, amount):
+        self.balance += amount
+        print("Deposit successful. New balance:", self.balance)
+
+    def withdraw(self, amount):
+        if self.balance >= amount:
+            self.balance -= amount
+            print("Withdrawal successful. New balance:", self.balance)
+        else:
+            print("Insufficient balance. Withdrawal failed.")
+
+# Create an instance of BankAccount
+account = BankAccount("C123", "ACC456")
+
+# Deposit money into the account
+account.deposit(1000)
+
+# Withdraw money from the account
+account.withdraw(500)
+
+# Try to withdraw more than the available balance
+account.withdraw(700)
+
+# Print the final balance
+print("Final balance:", account.balance)
+
+'''
+
+Question 4:
+You want to scrape the title and price of products listed on an e-commerce website.
+ Write a Python program using the BeautifulSoup library to scrape the title and 
+ price of the first five products on the website and display them on the screen.
+ 
+'''
+# C:\Users\shind\PycharmProjects\pythonProject1> pip install requests
+import requests
+# C:\Users\shind\PycharmProjects\pythonProject1> pip install beautifulsoup4
+from bs4 import BeautifulSoup
+
+# URL of the e-commerce website
+url = "https://www.amazon.in/gp/bestsellers/?ref_=nav_cs_bestsellers"
+
+# Send a GET request to the website
+response = requests.get(url)
+
+# Create a BeautifulSoup object to parse the HTML content
+soup = BeautifulSoup(response.content, 'html.parser')
+
+# Find the container elements that hold the product information
+product_containers = soup.find_all('div', class_='a-carousel')
+
+# Iterate over the first five product containers
+for container in product_containers[:2]:
+    # Extract the title and price from each container
+    title = container.find('h2', class_='a-carousel-col a-carousel-center').text.strip()
+    price = container.find('span', class_='_cDEzb_p13n-sc-price_3mJ9Z').text.strip()
+
+    # Display the title and price on the screen
+    print("Title:", title)
+    print("Price:", price)
+    print()
+
+'''
+Question 5:
+You have a dataset that contains information about the sales of different products. 
+The dataset has two columns: "Product" and "Sales." Write a Python program using the 
+Matplotlib library to create a bar chart showing the sales of each product.
+
+'''
+import matplotlib.pyplot as plt
+
+# Sample dataset
+dataset = {
+    "Product": ["VGA_CABLE", "LAP_CASE", "C_TYP_CORD", "D_TYP_CORD", "HDMI_CABLE"],
+    "Sales": [500, 800, 300, 200, 600]
+}
+
+# Extract data from the dataset
+products = dataset["Product"]
+sales = dataset["Sales"]
+
+# Create a bar chart
+plt.bar(products, sales)
+
+# Set labels and title
+plt.xlabel("Product")
+plt.ylabel("Sales")
+plt.title("Product Sales")
+
+# Display the chart
+plt.show()
